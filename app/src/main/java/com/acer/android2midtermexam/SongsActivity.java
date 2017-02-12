@@ -181,6 +181,8 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
         int id = item.getItemId();
         if(id == R.id.clear){
             searchTxt.setText("");
+            recyclerView.setVisibility(View.GONE);
+            mEmptyStateTextView.setVisibility(View.VISIBLE);
         }
         if(id == R.id.artistName){
             label.setText("Search album by artist");
