@@ -1,4 +1,4 @@
-package com.acer.android2midtermexam;
+package com.quiamco.midtermExam;
 
 import android.content.AsyncTaskLoader;
 import android.content.Context;
@@ -6,7 +6,7 @@ import android.content.Context;
 import java.util.ArrayList;
 
 /**
- * Created by Acer on 11/02/2017.
+ * Created by Dd on 12/02/2017.
  */
 
 public class AlbumLoader extends AsyncTaskLoader<ArrayList<Album>>{

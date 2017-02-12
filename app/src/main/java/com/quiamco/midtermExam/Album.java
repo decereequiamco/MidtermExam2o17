@@ -1,7 +1,7 @@
-package com.acer.android2midtermexam;
+package com.quiamco.midtermExam;
 
 /**
- * Created by Acer on 11/02/2017.
+ * Created by Dd on 12/02/2017.
  */
 
 public class Album {

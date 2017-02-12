@@ -1,4 +1,4 @@
-package com.acer.android2midtermexam;
+package com.quiamco.midtermExam;
 
 import android.text.TextUtils;
 import android.util.Log;
@@ -18,7 +18,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 
 /**
- * Created by Acer on 11/02/2017.
+ * Created by Dd on 12/02/2017.
  */
 
 public class QueryUtils {

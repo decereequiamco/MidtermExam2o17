@@ -1,4 +1,4 @@
-package com.acer.android2midtermexam;
+package com.quiamco.midtermExam;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 
 /**
- * Created by Acer on 12/02/2017.
+ * Created by Dd on 12/02/2017.
  */
 
 public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder> {

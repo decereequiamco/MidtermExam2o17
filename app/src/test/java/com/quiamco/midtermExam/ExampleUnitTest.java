@@ -1,4 +1,4 @@
-package com.acer.android2midtermexam;
+package com.quiamco.midtermExam;
 
 import org.junit.Test;
 

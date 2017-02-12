@@ -1,4 +1,4 @@
-package com.acer.android2midtermexam;
+package com.quiamco.midtermExam;
 
 import android.app.Activity;
 import android.app.LoaderManager;
@@ -10,14 +10,12 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -27,7 +25,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -185,11 +182,11 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
             mEmptyStateTextView.setVisibility(View.VISIBLE);
         }
         if(id == R.id.artistName){
-            label.setText("Search album by artist");
+            label.setText("");
             searchBy = 1;
         }
         if(id == R.id.albumName){
-            label.setText("Search album by name");
+            label.setText("");
             searchBy = 2;
         }
         return super.onOptionsItemSelected(item);
