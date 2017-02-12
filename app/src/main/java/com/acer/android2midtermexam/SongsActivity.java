@@ -43,7 +43,10 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
     private static final String REQUEST_URL = "http://ws.audioscrobbler.com/2.0/?" ;
 
     private static final int ALBUM_LOADER_ID1 = 1;
+    private static final int ALBUM_LOADER_ID2 = 2;
+    private int searchBy = 1;
     private TextView mEmptyStateTextView;
+    private TextView label;
     private TextView searchTxt;
     private RecyclerView recyclerView;
     private ProgressBar loadingIndicator;
@@ -69,6 +72,7 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
 
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        label = (TextView) findViewById(R.id.label);
         searchTxt = (TextView) findViewById(R.id.searchTxt);
         loadingIndicator = (ProgressBar) findViewById(R.id.loading_indicator);
 
@@ -104,22 +108,29 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
         Uri baseUri = Uri.parse(REQUEST_URL);
         Uri.Builder uriBuilder = baseUri.buildUpon();
 
-        uriBuilder.appendQueryParameter("method","artist.gettopalbums");
-        uriBuilder.appendQueryParameter("artist",getSearch()); // edit later
-        uriBuilder.appendQueryParameter("api_key", "490b41d76995ab4e15ca4d9d04e015a9");
-        uriBuilder.appendQueryParameter("limit","50");
-        uriBuilder.appendQueryParameter("format","json");
-
+        if(id == ALBUM_LOADER_ID1) {
+            uriBuilder.appendQueryParameter("method", "artist.gettopalbums");
+            uriBuilder.appendQueryParameter("artist", getSearch()); // edit later
+            uriBuilder.appendQueryParameter("api_key", "490b41d76995ab4e15ca4d9d04e015a9");
+            uriBuilder.appendQueryParameter("limit", "50");
+            uriBuilder.appendQueryParameter("format", "json");
+        }
+        else if (id == ALBUM_LOADER_ID2){
+            uriBuilder.appendQueryParameter("method", "album.search");
+            uriBuilder.appendQueryParameter("album", getSearch()); // edit later
+            uriBuilder.appendQueryParameter("api_key", "490b41d76995ab4e15ca4d9d04e015a9");
+            uriBuilder.appendQueryParameter("limit", "50");
+            uriBuilder.appendQueryParameter("format", "json");
+        }
         Log.d("charles",uriBuilder.toString());
 
-        return new AlbumLoader(this,uriBuilder.toString());
+        return new AlbumLoader(this,uriBuilder.toString(),id);
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<Album>> loader, ArrayList<Album> data) {
         recyclerView.setVisibility(View.VISIBLE);
         albumsAdapter = new AlbumsAdapter(this,data);
-        Log.d("charles","data: " + data.isEmpty());
         if(data != null && !data.isEmpty()){
             mEmptyStateTextView.setVisibility(View.GONE);
             loadingIndicator.setVisibility(View.GONE);
@@ -133,7 +144,8 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
             loadingIndicator.setVisibility(View.GONE);
             mEmptyStateTextView.setVisibility(View.VISIBLE);
         }
-        getLoaderManager().destroyLoader(ALBUM_LOADER_ID1);
+        getLoaderManager().destroyLoader(searchBy);
+        //getLoaderManager().destroyLoader(ALBUM_LOADER_ID2);
     }
 
     @Override
@@ -144,7 +156,8 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
         mEmptyStateTextView.setVisibility(View.GONE);
         loadingIndicator.setVisibility(View.VISIBLE);
         loaderManager = getLoaderManager();
-        loaderManager.initLoader(ALBUM_LOADER_ID1, null, this);
+        loaderManager.initLoader(searchBy, null, this);
+        //loaderManager.initLoader(ALBUM_LOADER_ID2 ,null, this);
         hideSoftKeyboard(SongsActivity.this);
 
     }
@@ -168,6 +181,14 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
         int id = item.getItemId();
         if(id == R.id.clear){
             searchTxt.setText("");
+        }
+        if(id == R.id.artistName){
+            label.setText("Search album by artist");
+            searchBy = 1;
+        }
+        if(id == R.id.albumName){
+            label.setText("Search album by name");
+            searchBy = 2;
         }
         return super.onOptionsItemSelected(item);
     }

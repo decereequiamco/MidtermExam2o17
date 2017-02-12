@@ -14,7 +14,7 @@
         android:id="@+id/label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Search for an album"
+        android:text="Search album by artist"
         android:textSize="14sp"
         android:textColor="#E71919"/>
     <EditText

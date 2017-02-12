@@ -1,6 +1,7 @@
 package com.acer.android2midtermexam;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -25,17 +26,24 @@ public class QueryUtils {
     public QueryUtils() {
     }
 
-    public static ArrayList<Album> fetchAlbumData(String requestUrl){
+    public static ArrayList<Album> fetchAlbumData(String requestUrl, int requestCode){
 
         URL url = createUrl(requestUrl);
         String jsonResponse = null;
+        ArrayList<Album> albums = new ArrayList<>();
         try{
             jsonResponse = makeHttpRequest(url);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ArrayList<Album> albums = extractFeatureFromJson(jsonResponse);
+        if(requestCode == 1) {
+            albums = extractFeatureFromJson(jsonResponse);
+        }
+        else if(requestCode == 2)
+        {
+            albums = extractFeatureFromJson2(jsonResponse);
+        }
         return albums;
     }
 
@@ -107,6 +115,7 @@ public class QueryUtils {
         }
 
         ArrayList<Album> albums = new ArrayList<>();
+        Log.d("charles",albumJson);
 
        try{
                 JSONObject baseJsonResponse = new JSONObject(albumJson);
@@ -119,11 +128,41 @@ public class QueryUtils {
                     String name = currentAlbum.getString("name");
                     String artist = currentAlbum.getJSONObject("artist").getString("name");
                     String url = currentAlbum.getString("url");
-                    String image = currentAlbum.getJSONArray("image").getJSONObject(0).getString("#text");
+                    String image = currentAlbum.getJSONArray("image").getJSONObject(2).getString("#text");
 
                     Album album = new Album(name, artist, url, image);
                     albums.add(album);
                 }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return albums;
+    }
+
+    private static ArrayList<Album> extractFeatureFromJson2(String albumJson){
+        if(TextUtils.isEmpty(albumJson)){
+            return null;
+        }
+
+        ArrayList<Album> albums = new ArrayList<>();
+        Log.d("charles",albumJson);
+        try{
+            JSONObject baseJsonResponse = new JSONObject(albumJson);
+            JSONObject albumArray = baseJsonResponse.getJSONObject("results");
+            JSONObject secondArray = albumArray.getJSONObject("albummatches");
+            JSONArray thirdArray = secondArray.getJSONArray("album");
+
+            for (int i = 0; i < thirdArray.length(); i++) {
+                JSONObject currentAlbum = thirdArray.getJSONObject(i);
+
+                String name = currentAlbum.getString("name");
+                String artist = currentAlbum.getString("artist");
+                String url = currentAlbum.getString("url");
+                String image = currentAlbum.getJSONArray("image").getJSONObject(2).getString("#text");
+
+                Album album = new Album(name, artist, url, image);
+                albums.add(album);
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

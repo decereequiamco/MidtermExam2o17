@@ -12,10 +12,12 @@ import java.util.ArrayList;
 public class AlbumLoader extends AsyncTaskLoader<ArrayList<Album>>{
 
     private String mUrl;
+    private int requestCode;
 
-    public AlbumLoader(Context context, String mUrl) {
+    public AlbumLoader(Context context, String mUrl, int requestCode) {
         super(context);
         this.mUrl = mUrl;
+        this.requestCode = requestCode;
     }
 
     @Override
@@ -28,6 +30,6 @@ public class AlbumLoader extends AsyncTaskLoader<ArrayList<Album>>{
         if(mUrl == null)
             return null;
 
-        return QueryUtils.fetchAlbumData(mUrl);
+        return QueryUtils.fetchAlbumData(mUrl,requestCode);
     }
 }

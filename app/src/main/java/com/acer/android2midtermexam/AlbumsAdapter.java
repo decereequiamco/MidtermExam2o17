@@ -1,6 +1,8 @@
 package com.acer.android2midtermexam;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,6 +59,15 @@ public class AlbumsAdapter extends RecyclerView.Adapter<AlbumsAdapter.ViewHolder
             album_image = (ImageView) itemView.findViewById(R.id.album_image);
             album_title = (TextView) itemView.findViewById(R.id.album_title);
             album_artist = (TextView) itemView.findViewById(R.id.album_artist);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Uri albumUri = Uri.parse(albums.get(getAdapterPosition()).getUrl());
+                    Intent websiteIntent = new Intent(Intent.ACTION_VIEW, albumUri);
+                    mContext.startActivity(websiteIntent);
+                }
+            });
 
         }
     }
