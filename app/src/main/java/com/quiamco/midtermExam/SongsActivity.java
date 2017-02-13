@@ -119,7 +119,7 @@ public class SongsActivity extends AppCompatActivity implements LoaderManager.Lo
             uriBuilder.appendQueryParameter("limit", "50");
             uriBuilder.appendQueryParameter("format", "json");
         }
-        Log.d("charles",uriBuilder.toString());
+        Log.d("dd",uriBuilder.toString());
 
         return new AlbumLoader(this,uriBuilder.toString(),id);
     }
